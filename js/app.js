@@ -68,7 +68,9 @@ function onDeviceReady() {
       });
 
       self.addPhoto = function () {
-        self.evidence.push(new Photo());
+        var photo = new Photo();
+        self.evidence.push(photo);
+        photo.record();
       };
 
       self.send = function () {
