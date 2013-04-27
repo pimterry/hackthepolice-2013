@@ -1,5 +1,14 @@
 var viewModel; // global to make debugging easier
 
+function takePhoto(successCallback, failCallback) {
+  navigator.camera.getPicture(successCallback, failCallback, {
+    destinationType: Camera.DestinationType.FILE_URI,
+    sourceType: Camera.PictureSourceType.CAMERA,
+    correctOrientation: true
+  });
+};
+
+
 $(function () {
   var client = new WindowsAzure.MobileServiceClient('https://eventrecorder.azure-mobile.net/', 'lGXaOUkxcMJPsNApiRLvoxoxgaXDLb16');
 
@@ -11,7 +20,12 @@ $(function () {
     self.photoSrc = ko.observable(undefined);
 
     self.record = function () {
-      self.isRecorded(true);
+      takePhoto(function (result) {
+        self.photoSrc = result;
+
+        self.isRecorded(true);
+      }, function () { alert("error!"); });
+
     };
   };
 

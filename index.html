@@ -20,6 +20,7 @@
                           <!-- ko if: isRecorded-->
                           <div>
                             Photo taken!
+                            <img data-bind="attr: { src: photoSrc }" />
                           </div>
                           <!-- /ko -->
                           <!-- ko ifnot: isRecorded -->
