@@ -47,7 +47,7 @@
                 <li data-bind="switch: evidenceType">
                   <div data-bind="case: 'photo'">
                     <div style="text-align: center" data-bind="if: isRecorded">
-                      <img width="80%" data-bind="attr: { src: 'data:image/png;base64,' + photoData() }" />
+                      <img width="80%" data-bind="attr: { src: 'data:image/jpeg;base64,' + photoData() }" />
                       <br/>
                       Photo taken at time 
                       <span data-bind="text: timeTaken"></span>

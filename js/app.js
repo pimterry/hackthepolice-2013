@@ -10,7 +10,8 @@ function onDeviceReady() {
       navigator.camera.getPicture(successCallback, failCallback, {
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
-        encodingType: Camera.EncodingType.PNG,
+        encodingType: Camera.EncodingType.JPEG,
+        quality: 70,
         correctOrientation: true
       });
     };
