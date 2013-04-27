@@ -18,8 +18,8 @@
                       <li data-bind="switch: evidenceType">
                         <div data-bind="case: 'photo'">
                           <!-- ko if: isRecorded-->
-                          <div>
-                            <img width="200px" height="200px" data-bind="attr: { src: photoSrc }" />
+                          <div style="text-align: center">
+                            <img width="80%" data-bind="attr: { src: photoSrc }" />
                           </div>
                           <!-- /ko -->
                           <!-- ko ifnot: isRecorded -->
