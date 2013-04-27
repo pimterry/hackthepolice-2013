@@ -9,7 +9,10 @@
     </head>
     <body>
         <div id='wrapper'>
-            <article>
+            <div data-bind="style: { display: 'none' }">
+              Loading...
+            </div>
+            <article style="display: none" data-bind="style: { display: 'block' }">
                 <header>
                     <h2>Met Police</h2>
                     <h1>Secure Evidence Recorder</h1>
