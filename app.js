@@ -1,16 +1,22 @@
 var viewModel; // global to make debugging easier
 
-function takePhoto(successCallback, failCallback) {
-  navigator.camera.getPicture(successCallback, failCallback, {
-    destinationType: Camera.DestinationType.FILE_URI,
-    sourceType: Camera.PictureSourceType.CAMERA,
-    correctOrientation: true
-  });
-};
 
 
 $(function () {
   var client = new WindowsAzure.MobileServiceClient('https://eventrecorder.azure-mobile.net/', 'lGXaOUkxcMJPsNApiRLvoxoxgaXDLb16');
+
+  function takePhoto(successCallback, failCallback) {
+    navigator.camera.getPicture(successCallback, failCallback, {
+      destinationType: Camera.DestinationType.FILE_URI,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      correctOrientation: true
+    });
+  };
+
+  function getLocation(successCallback, failCallback) {
+    navigator.geolocation.getCurrentPosition(successCallback, failCallback,
+        { maximumAge: 5000, timeout: 5000, enableHighAccuracy: true });
+  }
 
   function Photo() {
     var self = this;
@@ -19,12 +25,21 @@ $(function () {
     self.isRecorded = ko.observable(false);
     self.photoSrc = ko.observable(undefined);
 
+    self.location = ko.observable(undefined);
+    self.timeTaken = ko.observable(undefined);
+
     self.record = function () {
       takePhoto(function (result) {
-        self.photoSrc = result;
+        self.photoSrc(result);
+        self.timeTaken(new Date());
 
+        getLocation(function (location) {
+          self.location(ko.toJSON(location));
+        }, function () {
+          self.location(undefined);
+        });
         self.isRecorded(true);
-      }, function () { alert("error!"); });
+      }, function (error) { alert("Error taking photo: " + error); });
 
     };
   };

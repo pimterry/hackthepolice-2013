@@ -20,6 +20,11 @@
                           <!-- ko if: isRecorded-->
                           <div style="text-align: center">
                             <img width="80%" data-bind="attr: { src: photoSrc }" />
+                            <br/>
+                            Photo taken at time 
+                            <span data-bind="text: timeTaken"></span>
+                            at location
+                            <span data-bind="text: location"></span>
                           </div>
                           <!-- /ko -->
                           <!-- ko ifnot: isRecorded -->
