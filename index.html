@@ -13,8 +13,37 @@
                 <header>
                     <h2>Met Police</h2>
                     <h1>Secure Evidence Recorder</h1>
+
+                    <ul data-bind="foreach: evidence">
+                      <li data-bind="switch: evidenceType">
+                        <div data-bind="case: 'photo'">
+                          <!-- ko if: isRecorded-->
+                          <div>
+                            Photo taken!
+                          </div>
+                          <!-- /ko -->
+                          <!-- ko ifnot: isRecorded -->
+                          <div>
+                            No recorded yet!
+                            <input type="button"
+                                   data-bind="click: record"
+                                   value="Take Photo" />
+                          </div>
+                          <!-- /ko -->
+                        </div>
+                      </li>
+                    </ul>
                     
-                    <button type='submit'>Record Evidence</button>
+                    </br>
+
+                    <input type="button" 
+                           data-bind="click: addPhoto, enable: lastEvidenceIsRecorded"
+                           value="Add Photo" />
+
+                    <br/>
+                    <input type="button" 
+                           data-bind="if: evidence().length > 0, click: send"
+                           value="Record" />
                 </header>
             </article>
 
@@ -24,7 +53,8 @@
 
         <script src='//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js'></script>
         <script src='http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js'></script>
-        <script src='https://eventrecorder.azure-mobile.net/client/MobileServices.Web-1.0.0.min.js'></script>
+        <script src='https://eventrecorder.azure-mobile.net/client/MobileServices.Web-1.0.0.js'></script>
+        <script src='knockout-switch-case.js'></script>
         <script src='app.js'></script>
     </body>
 </html>
