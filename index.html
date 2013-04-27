@@ -3,62 +3,95 @@
     <head>
         <title>Met Police Secure Evidence Recorder</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">        
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">        
         <link rel='stylesheet' href='css/style.css' />
         <!--[if lt IE 9]>
         <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script>
         <![endif]-->
     </head>
     <body>
-        <div id='wrapper'>
-            <div data-bind="style: { display: 'none' }">
-              Loading...
+        <div class="navbar navbar-static-top navbar-inverse">
+          <div class="navbar-inner">
+            <div class="container">
+         
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+         
+              <div class="nav-collapse collapse">
+                <ul class="nav">
+                  <li><a href="index.html">Record Evidence</a></li>
+                  <li><a href="view.html">View Recorded</a></li>
+                  <li><a href="about.html">About</a></li>
+                </ul>
+              </div>
+         
             </div>
-            <article style="display: none" data-bind="style: { display: 'block' }">
-                <header>
-                    <h2>Met Police</h2>
-                    <h1>Secure Evidence Recorder</h1>
+          </div>
+        </div>
+        
+        <div class="container" style="text-align: center">
+            <div data-bind="style: { display: 'none' }">
+                Loading...
+            </div>
 
-                    <ul data-bind="foreach: evidence">
-                      <li data-bind="switch: evidenceType">
-                        <div data-bind="case: 'photo'">
-                          <!-- ko if: isRecorded-->
-                          <div style="text-align: center">
-                            <img width="80%" data-bind="attr: { src: photoSrc }" />
-                            <br/>
-                            Photo taken at time 
-                            <span data-bind="text: timeTaken"></span>
-                            at location
-                            <span data-bind="text: location"></span>
-                          </div>
-                          <!-- /ko -->
-                          <!-- ko ifnot: isRecorded -->
-                          <div>
-                            Not recorded yet!
-                            <input type="button"
-                                   data-bind="click: record"
-                                   value="Take Photo" />
-                          </div>
-                          <!-- /ko -->
-                        </div>
-                      </li>
-                    </ul>
-                    
-                    </br>
+            <div style="display: none" data-bind="style: { display: 'block' }">
+              <h3>Met Police</h3>
+              <h1>Secure Evidence Recorder</h1>
 
-                    <input type="button" 
-                           data-bind="click: addPhoto, enable: lastEvidenceIsRecorded"
-                           value="Add Photo" />
+              <ul class="unstyled" data-bind="foreach: evidence">
+                <li data-bind="switch: evidenceType">
+                  <div data-bind="case: 'photo'">
+                    <!-- ko if: isRecorded-->
+                    <div style="text-align: center">
+                      <img width="80%" data-bind="attr: { src: photoSrc }" />
+                      <br/>
+                      Photo taken at time 
+                      <span data-bind="text: timeTaken"></span>
+                      at location
+                      <span data-bind="text: location"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko ifnot: isRecorded -->
+                    <div>
+                      Not recorded yet!
+                      <input type="button"
+                             data-bind="click: record"
+                             value="Take Photo" />
+                    </div>
+                    <!-- /ko -->
+                  </div>
+                </li>
+              </ul>
+              
+              </br>
 
-                    <br/>
-                    <input type="button" 
-                           data-bind="if: evidence().length > 0, click: send"
-                           value="Record" />
-                </header>
-            </article>
+              <div class="btn-group">
+                <input class="btn btn-large"
+                       type="button" 
+                       data-bind="click: addPhoto, enable: lastEvidenceIsRecorded"
+                       value="Add Photo" />
+                <input class="btn btn-large"
+                       type="button" 
+                       data-bind="enable: lastEvidenceIsRecorded"
+                       value="Record Audio" />
+                <input class="btn btn-large"
+                       type="button" 
+                       data-bind="enable: lastEvidenceIsRecorded"
+                       value="Add Text" />
+              </div>
 
-            <footer>
-            </footer>
+              <br/><br/>
+
+              <input class="btn btn-primary btn btn-large"
+                     type="button" 
+                     data-bind="enable: evidence().length > 0, click: send"
+                     value="Save Evidence" />
+            </div>
         </div>
 
         <script type="text/javascript" src='js/lib/phonegap.js'></script>
