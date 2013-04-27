@@ -1,7 +1,5 @@
 var viewModel; // global to make debugging easier
 
-document.addEventListener("deviceready", onDeviceReady, false);
-
 function onDeviceReady() {
   $(function () {
     var client = new WindowsAzure.MobileServiceClient('https://eventrecorder.azure-mobile.net/', 'lGXaOUkxcMJPsNApiRLvoxoxgaXDLb16');

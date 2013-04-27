@@ -33,11 +33,11 @@
             </div>
           </div>
         </div>
-        
+
         <div style="text-align: center">
           <img src="img/met_logo.jpg" style="margin: auto" /><br />
         </div>
-
+        
         <div class="container">
             <div data-bind="style: { display: 'none' }">
                 Loading...
@@ -46,58 +46,23 @@
             <div style="display: none" data-bind="style: { display: 'block' }">
               <h1>Secure Evidence Recorder</h1>
 
-              <div style="text-align: center">
-                <ul class="unstyled" data-bind="foreach: evidence">
-                  <li data-bind="switch: evidenceType">
-                    <div data-bind="case: 'photo'">
-                      <div style="text-align: center" data-bind="if: isRecorded">
-                        <img class="img-polaroid" width="80%" 
-                             data-bind="attr: { src: 'data:image/jpeg;base64,' + photoData() }" />
-                        <br/>
-                        Photo taken at time 
-                        <span data-bind="text: timeTaken"></span>
-                        at location
-                        <span data-bind="text: location"></span>
-                      </div>
+              <ul class="unstyled" 
+                  data-bind="foreach: events">
+                  <li class="well well-small" >
+                  Evidence recording uploaded:<br/>
+                  <h3 style="display: inline" data-bind="text: time.calendar()"></h3>
+                  <!-- ko if: isMobile --><br/><!-- /ko -->
+                  <h4 style="display: inline"
+                      class="muted" 
+                      data-bind="text: '(' + time.fromNow() + ')'"></h4>
 
-                      <div data-bind="ifnot: isRecorded">
-                        <input class="btn btn-large btn-info"
-                               type="button"
-                               data-bind="click: record"
-                               value="Take Photo" />
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                
-                </br>
+                  <div data-bind="if: selected">
+                    event
+                  </div>
+                </li>
+              </ul>
 
-                <div class="btn-group">
-                  <!-- ko if: isMobile -->
-                  <input class="btn"
-                         type="button" 
-                         data-bind="click: addPhoto, enable: lastEvidenceIsRecorded"
-                         value="Take Photo" />
-                  <input class="btn"
-                         type="button" 
-                         data-bind="enable: lastEvidenceIsRecorded"
-                         value="Record Audio" />
-                  <!-- /ko -->
-                  <input class="btn"
-                         type="button" 
-                         data-bind="enable: lastEvidenceIsRecorded"
-                         value="Add Text" />
-                </div>
-
-                <br/><br/>
-
-                <input class="btn btn-primary btn btn-large"
-                       type="button" 
-                       data-bind="enable: evidence().length > 0, click: send"
-                       value="Save Evidence" />
-
-                 <br/>&nbsp;
-               </div>
+              <br/>
             </div>
         </div>
 
@@ -107,8 +72,9 @@
         <script type="text/javascript" src='js/lib/MobileServices.Web-1.0.0.js'></script>
         <script type="text/javascript" src='js/lib/knockout-switch-case.js'></script>
         <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>        
+        <script type="text/javascript" src="js/lib/moment.min.js"></script>        
 
-        <script type="text/javascript" src='js/index.js'></script>
+        <script type="text/javascript" src='js/view.js'></script>
         <script type="text/javascript" src='js/common.js'></script>
     </body>
 </html>
