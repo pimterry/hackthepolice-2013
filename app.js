@@ -37,7 +37,7 @@ function onDeviceReady() {
           getLocation(function (location) {
             self.location(ko.toJSON(location));
           }, function (error) {
-            alert("Error recording location: " + error);
+            alert("Error recording location: " + ko.toJSON(error));
             self.location(undefined);
           });
           self.isRecorded(true);
