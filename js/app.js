@@ -5,10 +5,11 @@ document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
   $(function () {
     var client = new WindowsAzure.MobileServiceClient('https://eventrecorder.azure-mobile.net/', 'lGXaOUkxcMJPsNApiRLvoxoxgaXDLb16');
+    var dataContainerName = 'evidenceData';
 
     function takePhoto(successCallback, failCallback) {
       navigator.camera.getPicture(successCallback, failCallback, {
-        destinationType: Camera.DestinationType.FILE_URI,
+        destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
         correctOrientation: true
       });
@@ -54,6 +55,14 @@ function onDeviceReady() {
         });
 
       };
+      
+      self.getData = function () {
+        return {
+          "time" : self.timeTaken,
+          "location": ko.toJSON(self.location),
+          "photo" : self.photoSrc()
+        };
+      }
     };
 
     function ViewModel() {
@@ -76,6 +85,20 @@ function onDeviceReady() {
       };
 
       self.send = function () {
+        var events = client.getTable('events');
+        var evidence = client.getTable('evidence');
+
+        events.insert({ }).then(function (newEvent) {
+          for (var ii = 0; ii < self.evidence().length; ii++) {
+            var evidenceData = self.evidence()[ii].getData();
+
+            evidenceData.eventId = newEvent.id;
+
+            evidence.insert(evidenceData).then(function (newEvidence) {
+              alert("Evidence stored");
+            });
+          }
+        });
       };
     };
 
