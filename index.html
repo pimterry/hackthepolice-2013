@@ -19,13 +19,13 @@
                         <div data-bind="case: 'photo'">
                           <!-- ko if: isRecorded-->
                           <div>
-                            Photo taken!
+                            Photo recorded at <span data-bind="text: photoSrc" />
                             <img data-bind="attr: { src: photoSrc }" />
                           </div>
                           <!-- /ko -->
                           <!-- ko ifnot: isRecorded -->
                           <div>
-                            No recorded yet!
+                            Not recorded yet!
                             <input type="button"
                                    data-bind="click: record"
                                    value="Take Photo" />
