@@ -5,12 +5,12 @@ document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
   $(function () {
     var client = new WindowsAzure.MobileServiceClient('https://eventrecorder.azure-mobile.net/', 'lGXaOUkxcMJPsNApiRLvoxoxgaXDLb16');
-    var dataContainerName = 'evidenceData';
 
     function takePhoto(successCallback, failCallback) {
       navigator.camera.getPicture(successCallback, failCallback, {
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
+        encodingType: Camera.EncodingType.PNG,
         correctOrientation: true
       });
     };
@@ -30,14 +30,14 @@ function onDeviceReady() {
 
       self.evidenceType = "photo";
       self.isRecorded = ko.observable(false);
-      self.photoSrc = ko.observable(undefined);
+      self.photoData = ko.observable(undefined);
 
       self.location = ko.observable(undefined);
       self.timeTaken = ko.observable(undefined);
 
       self.record = function () {
         takePhoto(function (result) {
-          self.photoSrc(result);
+          self.photoData(result);
           self.timeTaken(new Date());
 
           getGeneralLocation(function (location) {
@@ -60,7 +60,7 @@ function onDeviceReady() {
         return {
           "time" : self.timeTaken,
           "location": ko.toJSON(self.location),
-          "photo" : self.photoSrc()
+          "photo" : self.photoData()
         };
       }
     };
