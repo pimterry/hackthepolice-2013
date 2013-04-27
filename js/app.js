@@ -49,7 +49,9 @@ function onDeviceReady() {
             self.location(ko.toJSON(location));
           }, function (error) { });
           self.isRecorded(true);
-        }, function (error) { alert("Error taking photo: " + error); });
+        }, function (error) {
+          viewModel.evidence().remove(self);
+        });
 
       };
     };
