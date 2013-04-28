@@ -2649,6 +2649,7 @@
                             passthroughValue = callbackToInvoke(this._resolutionValueOrError);
                             passthroughState = resolutionState.success;
                         } catch (ex) {
+                            console.error(ex);
                             callbackDidNotThrow = false;
                             passthroughValue = ex;
                             passthroughState = resolutionState.error;
