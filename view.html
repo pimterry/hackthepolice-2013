@@ -47,8 +47,8 @@
               <h1>Secure Evidence Recorder</h1>
 
               <ul class="unstyled" 
-                  data-bind="foreach: events">
-                  <li class="well well-small" >
+                  data-bind="foreach: visibleEvents">
+                <li class="well well-small" data-bind="click: toggleOpen" >
                   Evidence recording uploaded:<br/>
                   <h3 style="display: inline" data-bind="text: time.calendar()"></h3>
                   <!-- ko if: isMobile --><br/><!-- /ko -->
@@ -57,12 +57,29 @@
                       data-bind="text: '(' + time.fromNow() + ')'"></h4>
 
                   <div data-bind="if: selected">
-                    event
+                    <div data-bind="if: loading">
+                      Loading evidence...
+                    </div>
+
+                    <ul style="text-align: center" data-bind="foreach: evidence">
+                      <li data-bind="switch: type">
+                        <div data-bind="case: 'photo'">
+                          <img class="img-polaroid" width="80%" 
+                               data-bind="attr: { src: 'data:image/jpeg;base64,' + photo }" />
+                          <br/>
+                          Photo taken at time 
+                          <span data-bind="text: time"></span>
+                          at location
+                          <span data-bind="text: location"></span>
+                        </div>
+                      </li>                     
+                    </ul>
                   </div>
                 </li>
               </ul>
-
+              
               <br/>
+
             </div>
         </div>
 

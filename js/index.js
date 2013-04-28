@@ -41,13 +41,14 @@ function onDeviceReady() {
 
           getGeneralLocation(function (location) {
             self.location(ko.toJSON(location));
+
+            getDetailedLocation(function (location) {
+              self.location(ko.toJSON(location));
+            }, function (error) { });
           }, function (error) {
             self.location(undefined);
           });
 
-          getDetailedLocation(function (location) {
-            self.location(ko.toJSON(location));
-          }, function (error) { });
           self.isRecorded(true);
         }, function (error) {
           viewModel.evidence().remove(self);
