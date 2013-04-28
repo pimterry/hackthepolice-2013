@@ -3,13 +3,13 @@ var viewModel; // global to make debugging easier
 function onDeviceReady() {
   $(function () {
     var client = new WindowsAzure.MobileServiceClient('https://eventrecorder.azure-mobile.net/', 'lGXaOUkxcMJPsNApiRLvoxoxgaXDLb16');
-    var mapsKey = 'AIzaSyAApAkr0eQRXR6quhknBqsJJySlJreB2hc';
 
     function loadEvidenceForEvent(eventId, callback) {
       evidence = client.getTable('evidence');
-      evidence.where({eventId: eventId}).read().then(function(loadedEvidence) {
-        callback(loadedEvidence);
-      });
+      evidence
+        .where({eventId: eventId}).read().then(function(loadedEvidence) {
+          callback(loadedEvidence);
+        });
     }
 
     function Event(viewModel, eventData) {
@@ -21,28 +21,28 @@ function onDeviceReady() {
       self.time = moment(eventData.recordedAt);
       self.evidence = ko.observableArray();
 
-      self.toggleOpen = function () {
-        if (self.selected() === true) {
-          self.close();
-        } else {
-          self.open();
-        }
-      };
-
       self.open = function () {
         if (self.evidence().length == 0 && !self.loading()) {
           self.loading(true);
 
           loadEvidenceForEvent(self.id, function(loadedEvidence) {
             for (var ii = 0; ii < loadedEvidence.length; ii++) {
+              var evidence = loadedEvidence[ii];
+              evidence.location = JSON.parse(evidence.location);
+              evidence.mapLink = "http://maps.google.co.uk/?q="
+                + evidence.location.coords.latitude + "," 
+                + evidence.location.coords.longitude + "&z=18"
               self.evidence.push(loadedEvidence[ii]);
             }
             self.loading(false);
           });
-        }
 
-        self.selected(true);
-        viewModel.selectedEvent(this);
+        }
+        
+        if (!self.selected()) {
+          self.selected(true);
+          viewModel.selectedEvent(this);
+        }
       };
 
       self.close = function () {
