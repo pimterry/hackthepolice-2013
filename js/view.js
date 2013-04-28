@@ -34,7 +34,7 @@ function onDeviceReady() {
 
           loadEvidenceForEvent(self.id, function(loadedEvidence) {
             for (var ii = 0; ii < loadedEvidence.length; ii++) {
-              self.evidence.push(loadedEvidence);
+              self.evidence.push(loadedEvidence[ii]);
             }
             self.loading(false);
           });
