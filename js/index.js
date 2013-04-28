@@ -109,15 +109,19 @@ function onDeviceReady() {
 
             evidence.insert(evidenceData).then(function (newEvidence) {
               uploadCount += 1;
-              progress((100 / totalEvidence) * uploadCount);
+              progress(Math.round((100 / totalEvidence) * uploadCount));
 
               if (uploadCount == totalEvidence) {
                 alert("Upload completed");
                 self.evidence([]);
                 self.progress(0);
               }
+            }, function (error) {
+              alert(error);
             });
           }
+        }, function (error) {
+          alert(error);
         });
       };
     };
