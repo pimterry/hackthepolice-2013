@@ -104,7 +104,7 @@
                              View Location »</a>    
                           <br/>
                           <p>
-                          (Accuracy <span data-bind="text: location.coords.accuracy"></span>m)
+                          (Accuracy <span data-bind="text: Math.round(location.coords.accuracy)"></span>m)
                           </p>
                           <!-- /ko -->
                         </div>
