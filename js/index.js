@@ -69,6 +69,22 @@ function onDeviceReady() {
     function ViewModel() {
       var self = this;
 
+      self.user = ko.observable(client.currentUser);
+      self.loggedIn = ko.computed(function () {
+        return (typeof self.user() != 'undefined' && 
+                self.user() != null); 
+      });
+      self.login = function () {
+        client.login("google").then(function () {
+          self.user(client.currentUser);
+        });
+      };
+      self.logout = function () {
+        client.logout();
+        self.user(undefined);
+        self.evidence([]);
+      };
+
       self.evidence = ko.observableArray();
 
       self.lastEvidenceIsRecorded = ko.computed(function () {

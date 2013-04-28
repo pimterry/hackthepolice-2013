@@ -3,6 +3,7 @@ var viewModel; // global to make debugging easier
 function onDeviceReady() {
   $(function () {
     var client = new WindowsAzure.MobileServiceClient('https://eventrecorder.azure-mobile.net/', 'lGXaOUkxcMJPsNApiRLvoxoxgaXDLb16');
+    var mapsKey = 'AIzaSyAApAkr0eQRXR6quhknBqsJJySlJreB2hc';
 
     function loadEvidenceForEvent(eventId, callback) {
       evidence = client.getTable('evidence');
@@ -52,6 +53,22 @@ function onDeviceReady() {
 
     function ViewModel() {
       var self = this;
+      
+      self.user = ko.observable(client.currentUser);
+      self.loggedIn = ko.computed(function () {
+        return (typeof self.user() != 'undefined' && 
+                self.user() != null); 
+      });
+      self.login = function () {
+        client.login("google").then(function () {
+          self.user(client.currentUser);
+        });
+      };
+      self.logout = function () {
+        client.logout();
+        self.user(undefined);
+        self.evidence([]);
+      };
 
       function eventIsSelected() {
         return typeof self.selectedEvent() != 'undefined';
@@ -80,6 +97,7 @@ function onDeviceReady() {
     };
 
     viewModel = new ViewModel();
+    viewModel.login();
     viewModel.loadEvents();
     ko.applyBindings(viewModel);
   });
