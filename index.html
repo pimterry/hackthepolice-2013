@@ -72,10 +72,6 @@
                         <img class="img-polaroid" width="80%" 
                              data-bind="attr: { src: 'data:image/jpeg;base64,' + photoData() }" />
                         <br/>
-                        Photo taken at time 
-                        <span data-bind="text: timeTaken"></span>
-                        at location
-                        <span data-bind="text: ko.toJSON(location())"></span>
                       </div>
 
                       <div data-bind="ifnot: isRecorded">
