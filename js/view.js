@@ -33,7 +33,7 @@ function onDeviceReady() {
           self.loading(true);
 
           loadEvidenceForEvent(self.id, function(loadedEvidence) {
-            for (var ii = 0; ii < loadedEvidence; ii++) {
+            for (var ii = 0; ii < loadedEvidence.length; ii++) {
               self.evidence.push(loadedEvidence);
             }
             self.loading(false);

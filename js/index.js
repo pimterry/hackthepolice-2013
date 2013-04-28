@@ -58,8 +58,9 @@ function onDeviceReady() {
       
       self.getData = function () {
         return {
-          "time" : self.timeTaken,
-          "location": ko.toJSON(self.location),
+          "type" : "photo",
+          "time" : self.timeTaken(),
+          "location": ko.toJSON(self.location()),
           "photo" : self.photoData()
         };
       }
