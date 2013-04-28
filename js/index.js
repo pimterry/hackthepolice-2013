@@ -14,15 +14,14 @@ function onDeviceReady() {
       });
     };
 
-    function getGeneralLocation(successCallback, failCallback) {
-      navigator.geolocation.getCurrentPosition(successCallback, failCallback,
-          { maximumAge: 30000, timeout: 5000, enableHighAccuracy: false });
-    }
+    var currentPosition = {};
 
-    function getDetailedLocation(successCallback, failCallback) {
-      navigator.geolocation.getCurrentPosition(successCallback, failCallback,
-          { maximumAge: 5000, timeout: 60000, enableHighAccuracy: true });
-    }
+    navigator.geolocation.watchPosition(function (newPositionData) {
+        currentPosition = newPositionData;
+      }, 
+      function () { },
+      { enableHighAccuracy: true, maximumAge: 5000 }
+    );
 
     function Photo() {
       var self = this;
@@ -38,16 +37,7 @@ function onDeviceReady() {
         takePhoto(function (result) {
           self.photoData(result);
           self.timeTaken(new Date());
-
-          getGeneralLocation(function (location) {
-            self.location(ko.toJSON(location));
-
-            getDetailedLocation(function (location) {
-              self.location(ko.toJSON(location));
-            }, function (error) { });
-          }, function (error) {
-            self.location(undefined);
-          });
+          self.location(currentPosition);
 
           self.isRecorded(true);
         }, function (error) {

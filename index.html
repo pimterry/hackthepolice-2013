@@ -75,7 +75,7 @@
                         Photo taken at time 
                         <span data-bind="text: timeTaken"></span>
                         at location
-                        <span data-bind="text: location"></span>
+                        <span data-bind="text: ko.toJSON(location())"></span>
                       </div>
 
                       <div data-bind="ifnot: isRecorded">
