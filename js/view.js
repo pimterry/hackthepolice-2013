@@ -67,7 +67,7 @@ function onDeviceReady() {
       self.logout = function () {
         client.logout();
         self.user(undefined);
-        self.evidence([]);
+        self.events([]);
       };
 
       function eventIsSelected() {
