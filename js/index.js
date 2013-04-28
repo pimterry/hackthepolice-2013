@@ -59,6 +59,8 @@ function onDeviceReady() {
     function ViewModel() {
       var self = this;
 
+      self.progress = ko.observable(0);
+
       self.user = ko.observable(client.currentUser);
       self.loggedIn = ko.computed(function () {
         return (typeof self.user() != 'undefined' && 
@@ -96,13 +98,24 @@ function onDeviceReady() {
         var evidence = client.getTable('evidence');
 
         events.insert({ }).then(function (newEvent) {
-          for (var ii = 0; ii < self.evidence().length; ii++) {
+          var totalEvidence = self.evidence().length;
+          var uploadCount = 0;
+
+          for (var ii = 0; ii < totalEvidence; ii++) {
             var evidenceData = self.evidence()[ii].getData();
+            progress(1);
 
             evidenceData.eventId = newEvent.id;
 
             evidence.insert(evidenceData).then(function (newEvidence) {
-              alert("Evidence stored");
+              uploadCount += 1;
+              progress((100 / totalEvidence) * uploadCount);
+
+              if (uploadCount == totalEvidence) {
+                alert("Upload completed");
+                self.evidence([]);
+                self.progress(0);
+              }
             });
           }
         });

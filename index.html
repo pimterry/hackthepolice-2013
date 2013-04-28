@@ -108,6 +108,10 @@
                 </div>
 
                 <br/><br/>
+                 
+                 <div class="progress progress-striped" data-bind="visible: progress() > 0">
+                   <div class="bar" data-bind="style: { width: progress() + '%' }"></div>
+                 </div>
 
                 <input class="btn btn-primary btn btn-large"
                        type="button" 
