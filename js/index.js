@@ -103,13 +103,13 @@ function onDeviceReady() {
 
           for (var ii = 0; ii < totalEvidence; ii++) {
             var evidenceData = self.evidence()[ii].getData();
-            progress(1);
+            self.progress(1);
 
             evidenceData.eventId = newEvent.id;
 
             evidence.insert(evidenceData).then(function (newEvidence) {
               uploadCount += 1;
-              progress(Math.round((100 / totalEvidence) * uploadCount));
+              self.progress(Math.round((100 / totalEvidence) * uploadCount));
 
               if (uploadCount == totalEvidence) {
                 alert("Upload completed");
