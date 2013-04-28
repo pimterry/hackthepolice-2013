@@ -68,7 +68,7 @@
                       <li data-bind="switch: type">
                         <div data-bind="case: 'photo'">
                           <img class="img-polaroid" width="80%" 
-                               data-bind="attr: { src: 'data:image/jpeg;base64,' + photo }" />
+                               data-bind="attr: { src: 'data:image/jpeg;base64,' + photo() }" />
                           <br/>
                           Photo taken at time 
                           <span data-bind="text: time"></span>

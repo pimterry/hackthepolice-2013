@@ -70,7 +70,7 @@ function onDeviceReady() {
 
       self.loadEvents = function () {
         var events = client.getTable("events");
-        events.orderBy("recordedAt").read().then(function (loadedEvents) {
+        events.orderByDescending("recordedAt").read().then(function (loadedEvents) {
           for (var ii = 0; ii < loadedEvents.length; ii++) {
             var eventData = loadedEvents[ii];
             self.events.push(new Event(self, eventData));
