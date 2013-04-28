@@ -62,6 +62,7 @@ function onDeviceReady() {
       self.login = function () {
         client.login("google").then(function () {
           self.user(client.currentUser);
+          self.loadEvents();
         });
       };
       self.logout = function () {
@@ -98,7 +99,6 @@ function onDeviceReady() {
 
     viewModel = new ViewModel();
     viewModel.login();
-    viewModel.loadEvents();
     ko.applyBindings(viewModel);
   });
 };
