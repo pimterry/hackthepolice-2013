@@ -46,6 +46,9 @@
             <div style="display: none" data-bind="style: { display: 'block' }">
               <h1>Secure Evidence Recorder</h1>
 
+              <div>
+                <strong data-bind="text: events().length"></strong> sets of recorded evidence
+              </div>
               <ul class="unstyled" 
                   data-bind="foreach: visibleEvents">
                 <li class="well well-small" data-bind="click: toggleOpen" >
